@@ -149,11 +149,11 @@
           case "https://www.malt.fr/profile/bastiensilhol":
             content_type = "malt";
             break;
+        }
 
-            logEvent(analytics, "select_content", {
+        logEvent(analytics, "select_content", {
               content_type,
             });
-        }
       });
     </script>
     <div class="container-fluid">
