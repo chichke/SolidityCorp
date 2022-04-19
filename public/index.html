@@ -108,7 +108,10 @@
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-analytics.js";
+      import {
+        getAnalytics,
+        logEvent,
+      } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-analytics.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -127,12 +130,41 @@
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
+
+      addEventListener("click", (e) => {
+        const href = e.target.href;
+        if (!href) return;
+
+        let content_type;
+        switch (href) {
+          case "mailto:me@soliditycorp.com":
+            content_type = "mail";
+            break;
+          case "https://www.linkedin.com/in/bastiensilhol/":
+            content_type = "linkedin";
+            break;
+          case "https://github.com/chichke":
+            content_type = "github";
+            break;
+          case "https://www.malt.fr/profile/bastiensilhol":
+            content_type = "malt";
+            break;
+
+            logEvent(analytics, "select_content", {
+              content_type,
+            });
+        }
+      });
     </script>
     <div class="container-fluid">
       <header class="d-flex justify-content-between py-3">
         <nav class="navbar navbar-expand-lg w-100">
           <div class="d-flex justify-content-between">
-            <img src="assets/favicon-32x32.png" class="image img-fluid d-block my-2" alt="SC Icon"/>
+            <img
+              src="assets/favicon-32x32.png"
+              class="image img-fluid d-block my-2"
+              alt="SC Icon"
+            />
           </div>
           <button
             class="navbar-toggler"
